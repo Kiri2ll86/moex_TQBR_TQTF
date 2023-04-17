@@ -8,11 +8,11 @@ import concurrent.futures
 board_list = ['TQBR', 'TQTF'] # список досок(акции, рублевые фонды)
 num_threads = 10 
 
-with open("E:/project_moex/TICK.txt", "r") as TICKs: # загружаем список тикеров из файла
+with open("TICK.txt", "r") as TICKs: # загружаем список тикеров из файла
     TICKs = [line.rstrip() for line in TICKs]
 
 for board in board_list:
-    pathlib.Path("E:/project_moex/Database/{}".format(board)).mkdir(parents=True, exist_ok=True) # создаем каталог для сохранения файлов Excel с данными
+    pathlib.Path("/Database/{}".format(board)).mkdir(parents=True, exist_ok=True) # создаем каталог для сохранения файлов Excel с данными
     
     def process_ticker(session, TICK): 
         data = apimoex.get_board_history(session, TICK, board=board) # функция API для загрузки данных с MOEX, метод get_board_history - получаем данные по каждому тикеру
@@ -21,7 +21,7 @@ for board in board_list:
         df = pd.DataFrame(data)
         df = df[['TRADEDATE','CLOSE']]
         df['TICKER'] = TICK
-        df.to_excel("E:/project_moex/Database/{}/{}.xlsx".format(board,TICK), index=False)
+        df.to_excel("/Database/{}/{}.xlsx".format(board,TICK), index=False)
         return df
 
     with requests.Session() as session: # сеанс устанавливает соединение с сервером MOEX
@@ -40,6 +40,6 @@ for board in board_list:
             # Объединяем данные из всех датафреймов в один датафрейм и записываем в файл Excel
             if len(dfs) > 0:
                 combined_df = pd.concat(dfs)
-                combined_df.to_excel("E:/project_moex/Database/{}.xlsx".format(board), index=False)
+                combined_df.to_excel("/Database/{}.xlsx".format(board), index=False)
 
 
