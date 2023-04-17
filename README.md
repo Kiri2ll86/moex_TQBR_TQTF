@@ -11,3 +11,4 @@
 - Внесите в текстовый документ `TICK.txt` необходимые тикеры, например SBER, GAZP
 - После запуска программы в папке `Database` сформируются необходимые .xlsx файлы 
 ## Результат
+![Alt-image](https://https://github.com/Kiri2ll86/moex_TQBR_TQTF/blob/main/1.jpg)
